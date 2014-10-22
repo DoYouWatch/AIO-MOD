@@ -17,10 +17,11 @@
 //*************DEFINES***************//
 //***********************************//
 
-#define PLUGIN_VERSION "1.0.0"
-#define TAG_AIO "[AIO] - "
-#define CVARS FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_REPLICATED|FCVAR_NOTIFY
-#define DEFAULT_FLAGS FCVAR_PLUGIN|FCVAR_NOTIFY
+#define PLUGIN_VERSION 		"1.1.0"
+#define TAG_AIO 			"[AIO] - "
+#define CVARS 				FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_REPLICATED|FCVAR_NOTIFY
+#define DEFAULT_FLAGS 		FCVAR_PLUGIN|FCVAR_NOTIFY
+
 
 //***********************************//
 //*************INCLUDE***************//
@@ -36,23 +37,54 @@
 
 
 //Include mode
+#include "aio/dependencies"
 #include "aio/smlib"
 #include "aio/colors/colors"
 #include "aio/enums/enums"
 
+
+
+
+
+/**************************COOKIES************************/
 #include "aio/cookies/init"
 
 #include "aio/cookies/csgo/general"
-#include "aio/cookies/csgo/track_bomb"
-#include "aio/cookies/csgo/show_damage"
-#include "aio/cookies/csgo/sounds_kill"
 
+#if defined TRACK_BOMB_CSGO_LOADED
+#include "aio/cookies/csgo/track_bomb"
+#endif
+
+#if defined SHOW_DAMAGE_CSGO_LOADED
+#include "aio/cookies/csgo/show_damage"
+#endif
+
+#if defined SOUNDS_KILL_CSGO_LOADED
+#include "aio/cookies/csgo/sounds_kill"
+#endif
+/**************************COOKIES************************/
+
+
+
+
+
+/**************************MENUS**************************/
 #include "aio/menus/init"
 
 #include "aio/menus/csgo/general"
+
+#if defined TRACK_BOMB_CSGO_LOADED
 #include "aio/menus/csgo/track_bomb"
+#endif
+
+#if defined SHOW_DAMAGE_CSGO_LOADED
 #include "aio/menus/csgo/show_damage"
+#endif
+
+#if defined SOUNDS_KILL_CSGO_LOADED
 #include "aio/menus/csgo/sounds_kill"
+#endif
+/**************************MENUS**************************/
 
 
 #include "aio/events/events"
@@ -62,15 +94,44 @@
 #include "aio/weapons/weapons"
 #include "aio/weapons/weapons_csgo"
 
+
+
+/**************************PLUGINS***********************/
+#if defined START_WEAPONS_CSGO_LOADED
 #include "aio/plugins/csgo/start_weapons"
+#endif
+
+#if defined ONLY_HS_CSGO_LOADED
 #include "aio/plugins/csgo/only_hs"
+#endif
+
+#if defined TRACK_BOMB_CSGO_LOADED
 #include "aio/plugins/csgo/track_bomb"
+#endif
+
+#if defined WIN_OR_DIE_CSGO_LOADED
 #include "aio/plugins/csgo/win_or_die"
+#endif
+
+#if defined SHOW_DAMAGE_CSGO_LOADED
 #include "aio/plugins/csgo/show_damage"
+#endif
+
+#if defined SOUNDS_KILL_CSGO_LOADED
 #include "aio/plugins/csgo/sounds_kill"
+#endif
+
+#if defined AFK_MANAGER_CSGO_LOADED
 #include "aio/plugins/csgo/afk_manager"
+#endif
+
+#if defined BOT_NAMES_CSGO_LOADED
 #include "aio/plugins/csgo/bot_names"
+#endif
+
+#if defined HIGH_PING_KICKER_CSGO_LOADED
 #include "aio/plugins/csgo/high_ping_kicker"
+#endif
 
 //***********************************//
 //***********PARAMETERS**************//
@@ -108,6 +169,7 @@ public Plugin:myinfo =
 public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
 {
 	AskPluginLoad2CookieInit(myself, late, error, err_max);
+	AskPluginLoad2Dependencies(myself, late, error, err_max);
 	return APLRes_Success;
 }
 
@@ -128,8 +190,8 @@ public OnPluginStart()
 	CreateConVar("aio_version", PLUGIN_VERSION, "Version", CVARS);
 
 	//Cvars
-	cvar_active			 		= CreateConVar("active", "1", 				"Enable/Disable Mod", 				DEFAULT_FLAGS, 		true, 0.0, 		true, 1.0);
-	cvar_active_dev				= CreateConVar("active_dev", "0", 			"Enable/Disable Dev Mod", 			DEFAULT_FLAGS, 		true, 0.0, 		true, 1.0);
+	cvar_active			 		= CreateConVar("active", 		"1", 				"Enable/Disable Mod", 				DEFAULT_FLAGS, 		true, 0.0, 		true, 1.0);
+	cvar_active_dev				= CreateConVar("active_dev", 	"0", 				"Enable/Disable Dev Mod", 			DEFAULT_FLAGS, 		true, 0.0, 		true, 1.0);
 	
 	DetectEngine();
 	HookEvents();
@@ -170,33 +232,50 @@ DetectEngine()
 		case Engine_CSGO:
 		{
 			ENGINE_VERSION = "CS:GO";
+			#if defined START_WEAPONS_CSGO_LOADED
+				//#include "aio/plugins/csgo/start_weapons"
+				OnPluginStartStartWeaponCsgo();
+			#endif
 			
-			//#include "aio/plugins/csgo/start_weapons"
-			OnPluginStartStartWeaponCsgo();
+			#if defined ONLY_HS_CSGO_LOADED
+				//#include "aio/plugins/csgo/only_hs"
+				OnPluginStartOnlyHsCsgo();
+			#endif
 			
-			//#include "aio/plugins/csgo/only_hs"
-			OnPluginStartOnlyHsCsgo();
+			#if defined TRACK_BOMB_CSGO_LOADED
+				//#include "aio/plugins/csgo/track_bomb"
+				OnPluginStartTrackBombCsgo();
+			#endif
 			
-			//#include "aio/plugins/csgo/track_bomb"
-			OnPluginStartTrackBombCsgo();
+			#if defined WIN_OR_DIE_CSGO_LOADED
+				//#include "aio/plugins/csgo/win_or_die"
+				OnPluginStartWODCsgo();
+			#endif
 			
-			//#include "aio/plugins/csgo/win_or_die"
-			OnPluginStartWODCsgo();
+			#if defined SHOW_DAMAGE_CSGO_LOADED
+				//#include "aio/plugins/csgo/show_damage"
+				OnPluginStartShowDamageCsgo();
+			#endif
 			
-			//#include "aio/plugins/csgo/show_damage"
-			OnPluginStartShowDamageCsgo();
+			#if defined SOUNDS_KILL_CSGO_LOADED
+				//#include "aio/plugins/csgo/sounds_kill"
+				OnPluginStartSoundsKillCsgo();
+			#endif
 			
-			//#include "aio/plugins/csgo/sounds_kill"
-			OnPluginStartSoundsKillCsgo();
+			#if defined AFK_MANAGER_CSGO_LOADED
+				//#include "aio/plugins/csgo/afk_manager"
+				OnPluginStartAfkManagerCsgo();
+			#endif
 			
-			//#include "aio/plugins/csgo/afk_manager"
-			OnPluginStartAfkManagerCsgo();
+			#if defined BOT_NAMES_CSGO_LOADED
+				//#include "aio/plugins/csgo/bot_names"
+				OnPluginStartBotNamesCsgo();
+			#endif
 			
-			//#include "aio/plugins/csgo/bot_names"
-			OnPluginStartBotNamesCsgo();
-			
-			//#include "aio/plugins/csgo/high_ping_kicker"
-			OnPluginStartHightPingKickerCsgo();
+			#if defined HIGH_PING_KICKER_CSGO_LOADED
+				//#include "aio/plugins/csgo/high_ping_kicker"
+				OnPluginStartHightPingKickerCsgo();
+			#endif
 		}
 	}
 
@@ -230,32 +309,50 @@ public Event_CvarChange(Handle:cvar, const String:oldValue[], const String:newVa
 	{
 		case Engine_CSGO:
 		{
-			//#include "aio/plugins/csgo/start_weapons"
-			Event_CvarChangeStartWeaponCsgo(cvar, oldValue, newValue);
+			#if defined START_WEAPONS_CSGO_LOADED
+				//#include "aio/plugins/csgo/start_weapons"
+				Event_CvarChangeStartWeaponCsgo(cvar, oldValue, newValue);
+			#endif
 			
-			//#include "aio/plugins/csgo/only_hs"
-			Event_CvarChangeOnlyHsCsgo(cvar, oldValue, newValue);
+			#if defined ONLY_HS_CSGO_LOADED
+				//#include "aio/plugins/csgo/only_hs"
+				Event_CvarChangeOnlyHsCsgo(cvar, oldValue, newValue);
+			#endif
 			
-			//#include "aio/plugins/csgo/track_bomb"
-			Event_CvarChangeTrackBombCsgo(cvar, oldValue, newValue);
-
-			//#include "aio/plugins/csgo/win_or_die"
-			Event_CvarChangeWODCsgo(cvar, oldValue, newValue);
+			#if defined TRACK_BOMB_CSGO_LOADED
+				//#include "aio/plugins/csgo/track_bomb"
+				Event_CvarChangeTrackBombCsgo(cvar, oldValue, newValue);
+			#endif
 			
-			//#include "aio/plugins/csgo/show_damage"
-			Event_CvarChangeShowDamageCsgo(cvar, oldValue, newValue);
+			#if defined WIN_OR_DIE_CSGO_LOADED
+				//#include "aio/plugins/csgo/win_or_die"
+				Event_CvarChangeWODCsgo(cvar, oldValue, newValue);
+			#endif
 			
-			//#include "aio/plugins/csgo/sounds_kill"
-			Event_CvarChangeSoundsKillCsgo(cvar, oldValue, newValue);
+			#if defined SHOW_DAMAGE_CSGO_LOADED
+				//#include "aio/plugins/csgo/show_damage"
+				Event_CvarChangeShowDamageCsgo(cvar, oldValue, newValue);
+			#endif
 			
-			//#include "aio/plugins/csgo/afk_manager"
-			Event_CvarChangeAfkManagerCsgo(cvar, oldValue, newValue);
+			#if defined SOUNDS_KILL_CSGO_LOADED
+				//#include "aio/plugins/csgo/sounds_kill"
+				Event_CvarChangeSoundsKillCsgo(cvar, oldValue, newValue);
+			#endif
 			
-			//#include "aio/plugins/csgo/bot_names"
-			Event_CvarChangeBotNamesCsgo(cvar, oldValue, newValue);
+			#if defined AFK_MANAGER_CSGO_LOADED
+				//#include "aio/plugins/csgo/afk_manager"
+				Event_CvarChangeAfkManagerCsgo(cvar, oldValue, newValue);
+			#endif
 			
-			//#include "aio/plugins/csgo/high_ping_kicker"
-			Event_CvarChangeHightPingKickerCsgo(cvar, oldValue, newValue);
+			#if defined BOT_NAMES_CSGO_LOADED
+				//#include "aio/plugins/csgo/bot_names"
+				Event_CvarChangeBotNamesCsgo(cvar, oldValue, newValue);
+			#endif
+			
+			#if defined HIGH_PING_KICKER_CSGO_LOADED
+				//#include "aio/plugins/csgo/high_ping_kicker"
+				Event_CvarChangeHightPingKickerCsgo(cvar, oldValue, newValue);
+			#endif
 		}
 	}
 	
@@ -287,32 +384,50 @@ public OnConfigsExecuted()
 		{
 			case Engine_CSGO:
 			{
-				//#include "aio/plugins/csgo/start_weapons"
-				OnConfigsExecutedStartWeaponCsgo();
+				#if defined START_WEAPONS_CSGO_LOADED
+					//#include "aio/plugins/csgo/start_weapons"
+					OnConfigsExecutedStartWeaponCsgo();
+				#endif
 				
-				//#include "aio/plugins/csgo/only_hs"
-				OnConfigsExecutedOnlyHsCsgo();
+				#if defined ONLY_HS_CSGO_LOADED
+					//#include "aio/plugins/csgo/only_hs"
+					OnConfigsExecutedOnlyHsCsgo();
+				#endif
 				
-				//#include "aio/plugins/csgo/track_bomb"
-				OnConfigsExecutedTrackBombCsgo();
+				#if defined TRACK_BOMB_CSGO_LOADED
+					//#include "aio/plugins/csgo/track_bomb"
+					OnConfigsExecutedTrackBombCsgo();
+				#endif
 				
-				//#include "aio/plugins/csgo/win_or_die"
-				OnConfigsExecutedWODCsgo();
+				#if defined WIN_OR_DIE_CSGO_LOADED
+					//#include "aio/plugins/csgo/win_or_die"
+					OnConfigsExecutedWODCsgo();
+				#endif
 				
-				//#include "aio/plugins/csgo/show_damage"
-				OnConfigsExecutedShowDamageCsgo();
+				#if defined SHOW_DAMAGE_CSGO_LOADED
+					//#include "aio/plugins/csgo/show_damage"
+					OnConfigsExecutedShowDamageCsgo();
+				#endif
 				
-				//#include "aio/plugins/csgo/sounds_kill"
-				OnConfigsExecutedSoundsKillCsgo();
+				#if defined SOUNDS_KILL_CSGO_LOADED
+					//#include "aio/plugins/csgo/sounds_kill"
+					OnConfigsExecutedSoundsKillCsgo();
+				#endif
 				
-				//#include "aio/plugins/csgo/afk_manager"
-				OnConfigsExecutedAfkManagerCsgo();
+				#if defined AFK_MANAGER_CSGO_LOADED
+					//#include "aio/plugins/csgo/afk_manager"
+					OnConfigsExecutedAfkManagerCsgo();
+				#endif
 				
-				//#include "aio/plugins/csgo/bot_names"
-				OnConfigsExecutedBotNamesCsgo();
+				#if defined BOT_NAMES_CSGO_LOADED
+					//#include "aio/plugins/csgo/bot_names"
+					OnConfigsExecutedBotNamesCsgo();
+				#endif
 				
-				//#include "aio/plugins/csgo/high_ping_kicker"
-				OnConfigsExecutedHightPingKickerCsgo();
+				#if defined HIGH_PING_KICKER_CSGO_LOADED
+					//#include "aio/plugins/csgo/high_ping_kicker"
+					OnConfigsExecutedHightPingKickerCsgo();
+				#endif
 			}
 		}
 		
@@ -341,32 +456,50 @@ public OnMapStart()
 		{
 			case Engine_CSGO:
 			{
-				//#include "aio/plugins/csgo/start_weapons"
-				OnMapStartStartWeaponCsgo();
+				#if defined START_WEAPONS_CSGO_LOADED
+					//#include "aio/plugins/csgo/start_weapons"
+					OnMapStartStartWeaponCsgo();
+				#endif
 				
-				//#include "aio/plugins/csgo/only_hs"
-				OnMapStartOnlyHsCsgo();
+				#if defined ONLY_HS_CSGO_LOADED
+					//#include "aio/plugins/csgo/only_hs"
+					OnMapStartOnlyHsCsgo();
+				#endif
 				
-				//#include "aio/plugins/csgo/track_bomb"
-				OnMapStartTrackBombCsgo();
+				#if defined TRACK_BOMB_CSGO_LOADED
+					//#include "aio/plugins/csgo/track_bomb"
+					OnMapStartTrackBombCsgo();
+				#endif
 				
-				//#include "aio/plugins/csgo/win_or_die"
-				OnMapStartWODCsgo();
+				#if defined WIN_OR_DIE_CSGO_LOADED
+					//#include "aio/plugins/csgo/win_or_die"
+					OnMapStartWODCsgo();
+				#endif
 				
-				//#include "aio/plugins/csgo/show_damage"
-				OnMapStartShowDamageCsgo();
+				#if defined SHOW_DAMAGE_CSGO_LOADED
+					//#include "aio/plugins/csgo/show_damage"
+					OnMapStartShowDamageCsgo();
+				#endif
 				
-				//#include "aio/plugins/csgo/sounds_kill"
-				OnMapStartSoundsKillCsgo();
+				#if defined SOUNDS_KILL_CSGO_LOADED
+					//#include "aio/plugins/csgo/sounds_kill"
+					OnMapStartSoundsKillCsgo();
+				#endif
 				
-				//#include "aio/plugins/csgo/afk_manager"
-				OnMapStartAfkManagerCsgo();
+				#if defined AFK_MANAGER_CSGO_LOADED
+					//#include "aio/plugins/csgo/afk_manager"
+					OnMapStartAfkManagerCsgo();
+				#endif
 				
-				//#include "aio/plugins/csgo/bot_names"
-				OnMapStartBotNamesCsgo();
+				#if defined BOT_NAMES_CSGO_LOADED
+					//#include "aio/plugins/csgo/bot_names"
+					OnMapStartBotNamesCsgo();
+				#endif
 				
-				//#include "aio/plugins/csgo/high_ping_kicker"
-				OnMapStartHightPingKickerCsgo();
+				#if defined HIGH_PING_KICKER_CSGO_LOADED
+					//#include "aio/plugins/csgo/high_ping_kicker"
+					OnMapStartHightPingKickerCsgo();
+				#endif
 			}
 		}
 		//#include "aio/cookies/init"
@@ -385,8 +518,10 @@ public OnMapEnd()
 		{
 			case Engine_CSGO:
 			{
-				//#include "aio/plugins/csgo/track_bomb"
-				OnMapEndTrackBombCsgo();
+				#if defined TRACK_BOMB_CSGO_LOADED
+					//#include "aio/plugins/csgo/track_bomb"
+					OnMapEndTrackBombCsgo();
+				#endif
 			}
 		}
 	}
@@ -413,17 +548,25 @@ public OnClientPutInServer(client)
 				/*Welcome message and copyright */
 				CreateTimer(30.0, Timer_WelcomeMsgHint, client);
 				
-				//#include "aio/plugins/csgo/only_hs"
-				SDKHook(client, SDKHook_OnTakeDamage, OnTakeDamageOnlyHsCsgo);
+				#if defined ONLY_HS_CSGO_LOADED
+					//#include "aio/plugins/csgo/only_hs"
+					SDKHook(client, SDKHook_OnTakeDamage, OnTakeDamageOnlyHsCsgo);
+				#endif
 				
-				//#include "aio/plugins/csgo/track_bomb"
-				SDKHook(client, SDKHook_TraceAttack, OnTracekAttackTrackBombCsgo);
+				#if defined TRACK_BOMB_CSGO_LOADED
+					//#include "aio/plugins/csgo/track_bomb"
+					SDKHook(client, SDKHook_TraceAttack, OnTracekAttackTrackBombCsgo);
+				#endif
 				
-				//#include "aio/plugins/csgo/bot_names"
-				OnClientPutInServerBotNamesCsgo(client);
+				#if defined BOT_NAMES_CSGO_LOADED
+					//#include "aio/plugins/csgo/bot_names"
+					OnClientPutInServerBotNamesCsgo(client);
+				#endif
 				
-				//#include "aio/plugins/csgo/high_ping_kicker"
-				OnClientPutInServerHightPingKickerCsgo(client);
+				#if defined HIGH_PING_KICKER_CSGO_LOADED
+					//#include "aio/plugins/csgo/high_ping_kicker"
+					OnClientPutInServerHightPingKickerCsgo(client);
+				#endif
 			}
 		}
 	}
@@ -440,8 +583,10 @@ public OnClientPostAdminCheck(client)
 		{
 			case Engine_CSGO:
 			{
-				//#include "aio/plugins/csgo/afk_manager"
-				OnClientPostAdminCheckAfkManagerCsgo(client);
+				#if defined AFK_MANAGER_CSGO_LOADED
+					//#include "aio/plugins/csgo/afk_manager"
+					OnClientPostAdminCheckAfkManagerCsgo(client);
+				#endif
 			}
 		}
 	}
@@ -470,8 +615,10 @@ public OnClientDisconnect(client)
 		{
 			case Engine_CSGO:
 			{
-				//#include "aio/plugins/csgo/afk_manager"
-				OnClientDisconnectAfkManagerCsgo(client);
+				#if defined AFK_MANAGER_CSGO_LOADED
+					//#include "aio/plugins/csgo/afk_manager"
+					OnClientDisconnectAfkManagerCsgo(client);
+				#endif
 			}
 		}
 	}

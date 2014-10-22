@@ -65,11 +65,15 @@ public Action:Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroa
 	{
 		case Engine_CSGO:
 		{
-			//#include "aio/plugins/csgo/start_weapons"
-			Event_PlayerSpawnStartWeaponCsgo(event, name, dontBroadcast);
+			#if defined START_WEAPONS_CSGO_LOADED
+				//#include "aio/plugins/csgo/start_weapons"
+				Event_PlayerSpawnStartWeaponCsgo(event, name, dontBroadcast);
+			#endif
 			
-			//#include "aio/plugins/csgo/afk_manager"
-			Event_PlayerSpawnAfkManagerCsgo(event, name, dontBroadcast);
+			#if defined AFK_MANAGER_CSGO_LOADED
+				//#include "aio/plugins/csgo/afk_manager"
+				Event_PlayerSpawnAfkManagerCsgo(event, name, dontBroadcast);
+			#endif
 		}
 	}
 }
@@ -83,8 +87,10 @@ public Action:Event_PlayerTeam(Handle:event, const String:name[], bool:dontBroad
 	{
 		case Engine_CSGO:
 		{
-			//#include "aio/plugins/csgo/afk_manager"
-			Event_PlayerTeamAfkManagerCsgo(event, name, dontBroadcast);
+			#if defined AFK_MANAGER_CSGO_LOADED
+				//#include "aio/plugins/csgo/afk_manager"
+				Event_PlayerTeamAfkManagerCsgo(event, name, dontBroadcast);
+			#endif
 		}
 	}
 }
@@ -100,14 +106,20 @@ public Action:Event_PlayerDeath(Handle:event, const String:name[], bool:dontBroa
 	{
 		case Engine_CSGO:
 		{
-			//#include "aio/plugins/csgo/start_weapons"
-			Event_PlayerDeathStartWeaponCsgo(event, name, dontBroadcast);
+			#if defined START_WEAPONS_CSGO_LOADED
+				//#include "aio/plugins/csgo/start_weapons"
+				Event_PlayerDeathStartWeaponCsgo(event, name, dontBroadcast);
+			#endif
 			
-			//#include "aio/plugins/csgo/sounds_kill"
-			Event_PlayerDeathSoundsKillCsgo(event, name, dontBroadcast);
+			#if defined SOUNDS_KILL_CSGO_LOADED
+				//#include "aio/plugins/csgo/sounds_kill"
+				Event_PlayerDeathSoundsKillCsgo(event, name, dontBroadcast);
+			#endif
 			
-			//#include "aio/plugins/csgo/afk_manager"
-			Event_PlayerDeathAfkManagerCsgo(event, name, dontBroadcast);
+			#if defined AFK_MANAGER_CSGO_LOADED
+				//#include "aio/plugins/csgo/afk_manager"
+				Event_PlayerDeathAfkManagerCsgo(event, name, dontBroadcast);
+			#endif
 		}
 	}
 }
@@ -123,8 +135,10 @@ public Action:Event_PlayerHurt(Handle:event, const String:name[], bool:dontBroad
 	{
 		case Engine_CSGO:
 		{
+			#if defined SHOW_DAMAGE_CSGO_LOADED
 				//#include "aio/plugins/csgo/show_damage"
 				Event_PlayerHurtShowDamageCsgo(event, name, dontBroadcast);
+			#endif
 		}
 	}
 }
@@ -140,8 +154,10 @@ public Action:Event_BotTakeOver(Handle:event, const String:name[], bool:dontBroa
 	{
 		case Engine_CSGO:
 		{
-			//#include "aio/plugins/csgo/start_weapons"
-			Event_BotTakeOverStartWeaponCsgo(event, name, dontBroadcast);
+			#if defined START_WEAPONS_CSGO_LOADED
+				//#include "aio/plugins/csgo/start_weapons"
+				Event_BotTakeOverStartWeaponCsgo(event, name, dontBroadcast);
+			#endif
 		}
 	}
 }
@@ -173,14 +189,20 @@ public Action:Event_RoundStart(Handle:event, const String:name[], bool:dontBroad
 	{
 		case Engine_CSGO:
 		{
-			//#include "aio/plugins/csgo/start_weapons"
-			Event_RoundStartStartWeaponCsgo(event, name, dontBroadcast);
+			#if defined START_WEAPONS_CSGO_LOADED
+				//#include "aio/plugins/csgo/start_weapons"
+				Event_RoundStartStartWeaponCsgo(event, name, dontBroadcast);
+			#endif
 			
-			//#include "aio/plugins/csgo/track_bomb"
-			Event_RoundStartTrackBombCsgo(event, name, dontBroadcast);
+			#if defined TRACK_BOMB_CSGO_LOADED
+				//#include "aio/plugins/csgo/track_bomb"
+				Event_RoundStartTrackBombCsgo(event, name, dontBroadcast);
+			#endif
 			
-			//#include "aio/plugins/csgo/sounds_kill"
-			Event_RoundStartoundsKillCsgo(event, name, dontBroadcast);
+			#if defined SOUNDS_KILL_CSGO_LOADED
+				//#include "aio/plugins/csgo/sounds_kill"
+				Event_RoundStartoundsKillCsgo(event, name, dontBroadcast);
+			#endif
 		}
 	}
 }
@@ -196,8 +218,10 @@ public Action:Event_RoundPreStart(Handle:event, const String:name[], bool:dontBr
 	{
 		case Engine_CSGO:
 		{
-			//#include "aio/plugins/csgo/track_bomb"
-			Event_RoundPreStartTrackBombCsgo(event, name, dontBroadcast);
+			#if defined TRACK_BOMB_CSGO_LOADED
+				//#include "aio/plugins/csgo/track_bomb"
+				Event_RoundPreStartTrackBombCsgo(event, name, dontBroadcast);
+			#endif
 		}
 	}
 }
@@ -229,11 +253,15 @@ public Action:Event_RoundFreezeEnd(Handle:event, const String:name[], bool:dontB
 	{
 		case Engine_CSGO:
 		{
-			//#include "aio/plugins/csgo/track_bomb"
-			Event_RoundFreezeEndTrackBombCsgo(event, name, dontBroadcast);
+			#if defined TRACK_BOMB_CSGO_LOADED
+				//#include "aio/plugins/csgo/track_bomb"
+				Event_RoundFreezeEndTrackBombCsgo(event, name, dontBroadcast);
+			#endif
 			
-			//#include "aio/plugins/csgo/sounds_kill"
-			Event_RoundFreezeEndSoundsKillCsgo(event, name, dontBroadcast);
+			#if defined SOUNDS_KILL_CSGO_LOADED
+				//#include "aio/plugins/csgo/sounds_kill"
+				Event_RoundFreezeEndSoundsKillCsgo(event, name, dontBroadcast);
+			#endif
 		}
 	}
 }
@@ -249,11 +277,15 @@ public Action:Event_RoundEnd(Handle:event, const String:name[], bool:dontBroadca
 	{
 		case Engine_CSGO:
 		{
-			//#include "aio/plugins/csgo/start_weapons"
-			Event_RoundEndStartWeaponCsgo(event, name, dontBroadcast);
+			#if defined START_WEAPONS_CSGO_LOADED
+				//#include "aio/plugins/csgo/start_weapons"
+				Event_RoundEndStartWeaponCsgo(event, name, dontBroadcast);
+			#endif
 			
-			//#include "aio/plugins/csgo/win_or_die"
-			Event_RoundEndWODCsgo(event, name, dontBroadcast);
+			#if defined WIN_OR_DIE_CSGO_LOADED
+				//#include "aio/plugins/csgo/win_or_die"
+				Event_RoundEndWODCsgo(event, name, dontBroadcast);
+			#endif
 		}
 	}
 }
@@ -269,11 +301,15 @@ public Action:Event_BombPickup(Handle:event, const String:name[], bool:dontBroad
 	{
 		case Engine_CSGO:
 		{
-			//#include "aio/plugins/csgo/start_weapons"
-			Event_BombPickupStartWeaponCsgo(event, name, dontBroadcast);
+			#if defined START_WEAPONS_CSGO_LOADED
+				//#include "aio/plugins/csgo/start_weapons"
+				Event_BombPickupStartWeaponCsgo(event, name, dontBroadcast);
+			#endif
 			
-			//#include "aio/plugins/csgo/track_bomb"
-			Event_BombPickupTrackBombCsgo(event, name, dontBroadcast);
+			#if defined TRACK_BOMB_CSGO_LOADED
+				//#include "aio/plugins/csgo/track_bomb"
+				Event_BombPickupTrackBombCsgo(event, name, dontBroadcast);
+			#endif
 		}
 	}
 }
@@ -289,8 +325,10 @@ public Action:Event_BombDropped(Handle:event, const String:name[], bool:dontBroa
 	{
 		case Engine_CSGO:
 		{
-			//#include "aio/plugins/csgo/track_bomb"
-			Event_BombDroppedTrackBombCsgo(event, name, dontBroadcast);
+			#if defined TRACK_BOMB_CSGO_LOADED
+				//#include "aio/plugins/csgo/track_bomb"
+				Event_BombDroppedTrackBombCsgo(event, name, dontBroadcast);
+			#endif
 		}
 	}
 }
@@ -306,8 +344,10 @@ public Action:Event_BombPlanted(Handle:event, const String:name[], bool:dontBroa
 	{
 		case Engine_CSGO:
 		{
-			//#include "aio/plugins/csgo/track_bomb"
-			Event_BombPlantedTrackBombCsgo(event, name, dontBroadcast);
+			#if defined TRACK_BOMB_CSGO_LOADED
+				//#include "aio/plugins/csgo/track_bomb"
+				Event_BombPlantedTrackBombCsgo(event, name, dontBroadcast);
+			#endif
 		}
 	}
 }
@@ -323,8 +363,10 @@ public Action:Event_BombAbortPlant(Handle:event, const String:name[], bool:dontB
 	{
 		case Engine_CSGO:
 		{
-			//#include "aio/plugins/csgo/track_bomb"
-			Event_BombAbortPlantTrackBombCsgo(event, name, dontBroadcast);
+			#if defined TRACK_BOMB_CSGO_LOADED
+				//#include "aio/plugins/csgo/track_bomb"
+				Event_BombAbortPlantTrackBombCsgo(event, name, dontBroadcast);
+			#endif
 		}
 	}
 }

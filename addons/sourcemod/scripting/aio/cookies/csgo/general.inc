@@ -17,9 +17,17 @@
 /***********************************************************/
 public APLRes:AskPluginLoad2CookieGeneralCsgo(Handle:myself, bool:late, String:error[], err_max)
 {
-	AskPluginLoad2CookieTrackBombCsgo(myself, late, error, err_max);
-	AskPluginLoad2CookieShowDamageCsgo(myself, late, error, err_max);
-	AskPluginLoad2CookieSoundsKillCsgo(myself, late, error, err_max);
+	#if defined TRACK_BOMB_CSGO_LOADED
+		AskPluginLoad2CookieTrackBombCsgo(myself, late, error, err_max);
+	#endif
+	
+	#if defined SHOW_DAMAGE_CSGO_LOADED
+		AskPluginLoad2CookieShowDamageCsgo(myself, late, error, err_max);
+	#endif
+	
+	#if defined SOUNDS_KILL_CSGO_LOADED
+		AskPluginLoad2CookieSoundsKillCsgo(myself, late, error, err_max);
+	#endif
 }
 
 /***********************************************************/
@@ -27,14 +35,20 @@ public APLRes:AskPluginLoad2CookieGeneralCsgo(Handle:myself, bool:late, String:e
 /***********************************************************/
 public OnPluginStartCookieGeneralCsgo()
 {
-	//#include "aio/cookies/csgo/track_bomb"
-	OnPluginStartCookieTrackBombCsgo();
+	#if defined TRACK_BOMB_CSGO_LOADED
+		//#include "aio/cookies/csgo/track_bomb"
+		OnPluginStartCookieTrackBombCsgo();
+	#endif	
+		
+	#if defined SHOW_DAMAGE_CSGO_LOADED
+		//#include "aio/cookies/csgo/show_damage"
+		OnPluginStartCookieShowDamageCsgo();
+	#endif	
 	
-	//#include "aio/cookies/csgo/show_damage"
-	OnPluginStartCookieShowDamageCsgo();
-	
-	//#include "aio/cookies/csgo/sounds_kill"
-	OnPluginStartCookieSoundsKillCsgo();
+	#if defined SOUNDS_KILL_CSGO_LOADED
+		//#include "aio/cookies/csgo/sounds_kill"
+		OnPluginStartCookieSoundsKillCsgo();
+	#endif	
 	
 	SetCookieMenuItem(CookieGeneralPrefMenuGeneralCsgo, 0, "AIO MOD");
 }
@@ -44,14 +58,20 @@ public OnPluginStartCookieGeneralCsgo()
 /***********************************************************/
 public Event_CvarChangeCookieGeneralCsgo(Handle:cvar, const String:oldValue[], const String:newValue[])
 {
-	//#include "aio/cookies/csgo/track_bomb"
-	Event_CvarChangeCookieTrackBombCsgo(cvar, oldValue, newValue);
+	#if defined TRACK_BOMB_CSGO_LOADED
+		//#include "aio/cookies/csgo/track_bomb"
+		Event_CvarChangeCookieTrackBombCsgo(cvar, oldValue, newValue);
+	#endif	
 	
-	//#include "aio/cookies/csgo/show_damage"
-	Event_CvarChangeCookieShowDamageCsgo(cvar, oldValue, newValue);
+	#if defined	SHOW_DAMAGE_CSGO_LOADED
+		//#include "aio/cookies/csgo/show_damage"
+		Event_CvarChangeCookieShowDamageCsgo(cvar, oldValue, newValue);
+	#endif	
 	
-	//#include "aio/cookies/csgo/sounds_kill"
-	Event_CvarChangeCookieSoundsKillCsgo(cvar, oldValue, newValue);
+	#if defined	SOUNDS_KILL_CSGO_LOADED
+		//#include "aio/cookies/csgo/sounds_kill"
+		Event_CvarChangeCookieSoundsKillCsgo(cvar, oldValue, newValue);
+	#endif	
 }
 
 /***********************************************************/
@@ -59,14 +79,20 @@ public Event_CvarChangeCookieGeneralCsgo(Handle:cvar, const String:oldValue[], c
 /***********************************************************/
 public OnConfigsExecutedCookieGeneralCsgo()
 {
-	//#include "aio/cookies/csgo/track_bomb"
-	OnConfigsExecutedCookieTrackBombCsgo();
+	#if defined TRACK_BOMB_CSGO_LOADED
+		//#include "aio/cookies/csgo/track_bomb"
+		OnConfigsExecutedCookieTrackBombCsgo();
+	#endif	
 	
-	//#include "aio/cookies/csgo/show_damage"
-	OnConfigsExecutedCookieShowDamageCsgo();
+	#if defined SHOW_DAMAGE_CSGO_LOADED
+		//#include "aio/cookies/csgo/show_damage"
+		OnConfigsExecutedCookieShowDamageCsgo();
+	#endif	
 	
-	//#include "aio/cookies/csgo/sounds_kill"
-	OnConfigsExecutedCookieSoundsKillCsgo();
+	#if defined	SOUNDS_KILL_CSGO_LOADED
+		//#include "aio/cookies/csgo/sounds_kill"
+		OnConfigsExecutedCookieSoundsKillCsgo();
+	#endif	
 }
 
 /***********************************************************/
@@ -74,14 +100,20 @@ public OnConfigsExecutedCookieGeneralCsgo()
 /***********************************************************/
 public OnMapStartCookieGeneralCsgo()
 {
-	//#include "aio/cookies/csgo/track_bomb"
-	OnMapStartCookieTrackBombCsgo();
+	#if defined TRACK_BOMB_CSGO_LOADED
+		//#include "aio/cookies/csgo/track_bomb"
+		OnMapStartCookieTrackBombCsgo();
+	#endif	
 	
-	//#include "aio/cookies/csgo/show_damage"
-	OnMapStartCookieShowDamageCsgo();
+	#if defined SHOW_DAMAGE_CSGO_LOADED	
+		//#include "aio/cookies/csgo/show_damage"
+		OnMapStartCookieShowDamageCsgo();
+	#endif	
 	
-	//#include "aio/cookies/csgo/sounds_kill"
-	OnMapStartCookieSoundsKillCsgo();
+	#if defined	SOUNDS_KILL_CSGO_LOADED
+		//#include "aio/cookies/csgo/sounds_kill"
+		OnMapStartCookieSoundsKillCsgo();
+	#endif	
 }
 
 /***********************************************************/
@@ -89,28 +121,40 @@ public OnMapStartCookieGeneralCsgo()
 /***********************************************************/
 public OnClientPutInServerCookieGeneralCsgo(client)
 {
-	//#include "aio/cookies/csgo/track_bomb"
-	OnClientPutInServerCookieTrackBombCsgo(client);
+	#if defined TRACK_BOMB_CSGO_LOADED
+		//#include "aio/cookies/csgo/track_bomb"
+		OnClientPutInServerCookieTrackBombCsgo(client);
+	#endif	
 	
-	//#include "aio/cookies/csgo/show_damage"
-	OnClientPutInServerCookieShowDamageCsgo(client);
+	#if defined SHOW_DAMAGE_CSGO_LOADED	
+		//#include "aio/cookies/csgo/show_damage"
+		OnClientPutInServerCookieShowDamageCsgo(client);
+	#endif	
 	
-	//#include "aio/cookies/csgo/sounds_kill"
-	OnClientPutInServerCookieSoundsKillCsgo(client);
+	#if defined	SOUNDS_KILL_CSGO_LOADED
+		//#include "aio/cookies/csgo/sounds_kill"
+		OnClientPutInServerCookieSoundsKillCsgo(client);
+	#endif	
 }
 /***********************************************************/
 /******************** WHEN COOKIE CACHED *******************/
 /***********************************************************/
 public OnClientCookiesCachedCookieGeneralCsgo(client)
 {
-	//#include "aio/cookies/csgo/track_bomb"
-	OnClientCookiesCachedTrackBombCsgo(client);
+	#if defined TRACK_BOMB_CSGO_LOADED
+		//#include "aio/cookies/csgo/track_bomb"
+		OnClientCookiesCachedTrackBombCsgo(client);
+	#endif	
 	
-	//#include "aio/cookies/csgo/show_damage"
-	OnClientCookiesCachedShowDamageCsgo(client);
+	#if defined SHOW_DAMAGE_CSGO_LOADED	
+		//#include "aio/cookies/csgo/show_damage"
+		OnClientCookiesCachedShowDamageCsgo(client);
+	#endif	
 	
-	//#include "aio/cookies/csgo/sounds_kill"
-	OnClientCookiesCachedSoundsKillCsgo(client);
+	#if defined	SOUNDS_KILL_CSGO_LOADED
+		//#include "aio/cookies/csgo/sounds_kill"
+		OnClientCookiesCachedSoundsKillCsgo(client);
+	#endif	
 }
 
 /***********************************************************/

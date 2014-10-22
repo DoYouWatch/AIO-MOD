@@ -30,9 +30,17 @@ new Handle:B_active_sounds_kill_menu_csgo;
 /***********************************************************/
 public OnPluginStartMenuGeneralCsgo()
 {
-	B_active_track_bomb_menu_csgo 			= FindConVar("active_track_bomb_csgo");
-	B_active_show_damage_menu_csgo 			= FindConVar("active_show_damage_csgo");
-	B_active_sounds_kill_menu_csgo 			= FindConVar("active_sounds_kill_csgo");
+	#if defined TRACK_BOMB_CSGO_LOADED
+		B_active_track_bomb_menu_csgo 			= FindConVar("active_track_bomb_csgo");
+	#endif
+	
+	#if defined SHOW_DAMAGE_CSGO_LOADED
+		B_active_show_damage_menu_csgo 			= FindConVar("active_show_damage_csgo");
+	#endif
+	
+	#if defined SOUNDS_KILL_CSGO_LOADED
+		B_active_sounds_kill_menu_csgo 			= FindConVar("active_sounds_kill_csgo");
+	#endif
 	
 	RegConsoleCmd("sm_aio",		Command_MenuGeneralCsgo, 		"AIO menu general");
 }
@@ -87,18 +95,27 @@ public MenuGeneralCsgo_Menu(Handle:menu, MenuAction:action, param1, param2)
 		{
 			new String:menu1[56];
 			GetMenuItem(menu, param2, menu1, sizeof(menu1));
-			if(StrEqual(menu1, "M_track_bomb"))
-			{
-				BuildSettingsMenuTrackBombCsgo(param1);
-			}
-			else if(StrEqual(menu1, "M_show_damage"))
-			{
-				BuildSettingsMenuShowDamageCsgo(param1);
-			}
-			else if(StrEqual(menu1, "M_sounds_kill"))
-			{
-				BuildSettingsMenuSoundsKillCsgo(param1);
-			}
+			
+			#if defined TRACK_BOMB_CSGO_LOADED
+				if(StrEqual(menu1, "M_track_bomb"))
+				{
+					BuildSettingsMenuTrackBombCsgo(param1);
+				}
+			#endif
+			
+			#if defined SHOW_DAMAGE_CSGO_LOADED
+				if(StrEqual(menu1, "M_show_damage"))
+				{
+					BuildSettingsMenuShowDamageCsgo(param1);
+				}
+			#endif
+			
+			#if defined SOUNDS_KILL_CSGO_LOADED	
+				if(StrEqual(menu1, "M_sounds_kill"))
+				{
+					BuildSettingsMenuSoundsKillCsgo(param1);
+				}
+			#endif
 		}
 	}
 }

@@ -17,7 +17,7 @@
 //*************DEFINES***************//
 //***********************************//
 
-#define PLUGIN_VERSION 		"1.1.0"
+#define PLUGIN_VERSION 		"1.1.1"
 #define TAG_AIO 			"[AIO] - "
 #define CVARS 				FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_REPLICATED|FCVAR_NOTIFY
 #define DEFAULT_FLAGS 		FCVAR_PLUGIN|FCVAR_NOTIFY
@@ -64,8 +64,8 @@
 #endif
 /**************************COOKIES************************/
 
-
-
+#include "aio/weapons/weapons"
+#include "aio/weapons/weapons_csgo"
 
 
 /**************************MENUS**************************/
@@ -86,15 +86,9 @@
 #endif
 /**************************MENUS**************************/
 
-
 #include "aio/events/events"
 #include "aio/clients/clients"
 #include "aio/objectifs/objectifs"
-
-#include "aio/weapons/weapons"
-#include "aio/weapons/weapons_csgo"
-
-
 
 /**************************PLUGINS***********************/
 #if defined START_WEAPONS_CSGO_LOADED
@@ -359,6 +353,9 @@ public Event_CvarChange(Handle:cvar, const String:oldValue[], const String:newVa
 	//#include "aio/cookies/init"
 	Event_CvarChangeCookieInit(cvar, oldValue, newValue);
 	
+	//#include "aio/menus/init"
+	Event_CvarChangeStartMenuInit(cvar, oldValue, newValue);
+	
 }
 
 /***********************************************************/
@@ -433,6 +430,9 @@ public OnConfigsExecuted()
 		
 		//#include "aio/cookies/init"
 		OnConfigsExecutedCookieInit();
+		
+		//#include "aio/menus/init"
+		OnConfigsExecutedMenuInit();
 	}
 }
 
@@ -504,6 +504,9 @@ public OnMapStart()
 		}
 		//#include "aio/cookies/init"
 		OnMapStartCookieInit();
+		
+		//#include "aio/menus/init"
+		OnMapStartMenuInit();
 	}
 }
 

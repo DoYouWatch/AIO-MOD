@@ -81,7 +81,7 @@ public OnMapStartObjectifs()
 /***********************************************************/
 /******************* GET OBJECTIF OF MAP *******************/
 /***********************************************************/
-GetObjectifMap()
+stock GetObjectifMap()
 {
 	new maxEntities = GetMaxEntities();
 	decl String:class[24];
@@ -126,7 +126,7 @@ GetObjectifMap()
 /***********************************************************/
 /******************* SET OBJECTIF OF MAP *******************/
 /***********************************************************/
-SetObjectifMap(const String:status[])
+stock SetObjectifMap(const String:status[])
 {
 	new maxEntities = GetMaxEntities();
 	decl String:class[24];
@@ -151,7 +151,7 @@ SetObjectifMap(const String:status[])
 /***********************************************************/
 /********************* REMOVE HOSTAGES *********************/
 /***********************************************************/
-RemoveHostages()
+stock RemoveHostages()
 {
 	new maxEntities = GetMaxEntities();
 	decl String:class[24];
@@ -176,7 +176,7 @@ RemoveHostages()
 /***********************************************************/
 /*********************** REMOVE C4 *************************/
 /***********************************************************/
-RemoveC4()
+stock RemoveC4()
 {
 	for (new i = 1; i <= MaxClients; i++)
 	{
@@ -188,7 +188,7 @@ RemoveC4()
 /***********************************************************/
 /************************ STRIP C4 *************************/
 /***********************************************************/
-bool:StripC4(client)
+stock bool:StripC4(client)
 {
 	if (IsClientValid(client) && (Teams:GetClientTeam(client) == TeamT))
 	{
@@ -223,7 +223,7 @@ bool:StripC4(client)
 /***********************************************************/
 /******************* GET OBJECTIF OF MAP *******************/
 /***********************************************************/
-GetBuyZoneMap()
+stock GetBuyZoneMap()
 {
 	B_map_buyzone = false;
 	decl String:szClass[65];
@@ -256,7 +256,7 @@ GetBuyZoneMap()
 /***********************************************************/
 /******************* REMOVE BUYZONE OF MAP ********************/
 /***********************************************************/
-RemoveBuyZoneMap()
+stock RemoveBuyZoneMap()
 {
 	decl String:szClass[65];
 	for (new i = MaxClients; i <= GetMaxEntities(); i++)

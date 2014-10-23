@@ -35,3 +35,48 @@ public OnPluginStartMenuInit()
 
 }
 
+/***********************************************************/
+/******************** WHEN CVARS CHANGE ********************/
+/***********************************************************/
+public Event_CvarChangeStartMenuInit(Handle:cvar, const String:oldValue[], const String:newValue[])
+{
+	switch (C_engine_menu_init_version)
+	{
+		case Engine_CSGO:
+		{
+			//#include "aio/menus/csgo/general"
+			Event_CvarChangeStartMenuGeneralCsgo(cvar, oldValue, newValue);
+		}
+	}
+}
+
+/***********************************************************/
+/******************* WHEN CONFIG EXECUTED ******************/
+/***********************************************************/
+public OnConfigsExecutedMenuInit()
+{
+	switch (C_engine_menu_init_version)
+	{
+		case Engine_CSGO:
+		{
+			//#include "aio/menus/csgo/general"
+			//OnConfigsExecutedMenuGeneralCsgo();
+		}
+	}
+}
+
+/***********************************************************/
+/********************* WHEN MAP START **********************/
+/***********************************************************/
+public OnMapStartMenuInit()
+{
+	switch (C_engine_menu_init_version)
+	{
+		case Engine_CSGO:
+		{
+			//#include "aio/menus/csgo/general"
+			OnMapStartMenuGeneralCsgo();
+		}
+	}
+}
+

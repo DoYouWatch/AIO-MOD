@@ -36,7 +36,7 @@ public APLRes:AskPluginLoad2Dependencies(Handle:myself, bool:late, String:error[
 	//PluginInfosPath("afk_manager.inc");
 }
 
-bool:PluginInfosPath(String:S_plugin_name[])
+stock bool:PluginInfosPath(String:S_plugin_name[])
 {
 	new String:S_path[PLATFORM_MAX_PATH];
 	Format(S_path, PLATFORM_MAX_PATH, "%s%s", PATH_PLUGINS_CSGO, S_plugin_name);

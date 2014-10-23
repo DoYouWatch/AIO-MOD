@@ -21,30 +21,89 @@
 //***********************************//
 
 //Handle
-new Handle:B_active_track_bomb_menu_csgo;
-new Handle:B_active_show_damage_menu_csgo;
-new Handle:B_active_sounds_kill_menu_csgo;
+new Handle:H_active_track_bomb_menu_csgo;
+new Handle:H_active_show_damage_menu_csgo;
+new Handle:H_active_sounds_kill_menu_csgo;
+
+//Bool
+new bool:B_active_track_bomb_menu_csgo;
+new bool:B_active_show_damage_menu_csgo;
+new bool:B_active_sounds_kill_menu_csgo;
 
 /***********************************************************/
 /*********************** PLUGIN START **********************/
 /***********************************************************/
 public OnPluginStartMenuGeneralCsgo()
 {
-	#if defined TRACK_BOMB_CSGO_LOADED
-		B_active_track_bomb_menu_csgo 			= FindConVar("active_track_bomb_csgo");
-	#endif
-	
-	#if defined SHOW_DAMAGE_CSGO_LOADED
-		B_active_show_damage_menu_csgo 			= FindConVar("active_show_damage_csgo");
-	#endif
-	
-	#if defined SOUNDS_KILL_CSGO_LOADED
-		B_active_sounds_kill_menu_csgo 			= FindConVar("active_sounds_kill_csgo");
-	#endif
+	H_active_track_bomb_menu_csgo 			= FindConVar("active_track_bomb_csgo");
+	H_active_show_damage_menu_csgo 			= FindConVar("active_show_damage_csgo");
+	H_active_sounds_kill_menu_csgo 			= FindConVar("active_sounds_kill_csgo");
+
+	HookEventsMenuGeneralCsgo();
 	
 	RegConsoleCmd("sm_aio",		Command_MenuGeneralCsgo, 		"AIO menu general");
 }
 
+/***********************************************************/
+/******************** WHEN CVAR CHANGED ********************/
+/***********************************************************/
+HookEventsMenuGeneralCsgo()
+{
+	HookConVarChange(H_active_track_bomb_menu_csgo, 				Event_CvarChangeStartMenuGeneralCsgo);
+	HookConVarChange(H_active_show_damage_menu_csgo, 				Event_CvarChangeStartMenuGeneralCsgo);
+	HookConVarChange(H_active_sounds_kill_menu_csgo, 				Event_CvarChangeStartMenuGeneralCsgo);
+}
+
+/***********************************************************/
+/******************** WHEN CVARS CHANGE ********************/
+/***********************************************************/
+public Event_CvarChangeStartMenuGeneralCsgo(Handle:cvar, const String:oldValue[], const String:newValue[])
+{
+	UpdateStateStartMenuGeneralCsgo();
+}
+
+/***********************************************************/
+/*********************** UPDATE STATE **********************/
+/***********************************************************/
+UpdateStateStartMenuGeneralCsgo()
+{
+	#if defined TRACK_BOMB_CSGO_LOADED
+		B_active_track_bomb_menu_csgo 			= GetConVarBool(H_active_track_bomb_menu_csgo);
+	#else
+		B_active_track_bomb_menu_csgo 			= false;
+	#endif	
+	
+	
+	#if defined SHOW_DAMAGE_CSGO_LOADED	
+		B_active_show_damage_menu_csgo 			= GetConVarBool(H_active_show_damage_menu_csgo);
+	#else
+		B_active_show_damage_menu_csgo 			= false;
+	#endif
+	
+	
+	#if defined SOUNDS_KILL_CSGO_LOADED
+		B_active_sounds_kill_menu_csgo 			= GetConVarBool(H_active_sounds_kill_menu_csgo);
+	#else
+		B_active_sounds_kill_menu_csgo 			= false;
+	#endif
+
+}
+
+/***********************************************************/
+/******************* WHEN CONFIG EXECUTED ******************/
+/***********************************************************/
+public OnConfigsExecutedMenuGeneralCsgo()
+{
+	//UpdateStateStartMenuGeneralCsgo();
+}
+
+/***********************************************************/
+/********************* WHEN MAP START **********************/
+/***********************************************************/
+public OnMapStartMenuGeneralCsgo()
+{
+	UpdateStateStartMenuGeneralCsgo();
+}
 
 /***********************************************************/
 /******************* COMMANDE TRACK BOMB *******************/

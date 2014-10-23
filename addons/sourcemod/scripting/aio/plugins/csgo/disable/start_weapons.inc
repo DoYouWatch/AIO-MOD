@@ -14,6 +14,9 @@
 //***********************************//
 //*************DEFINE****************//
 //***********************************//
+#define WEAPONS_LOADED
+#define WEAPONS_CSGO_LOADED
+
 #define TAG_START_WEAPON_CSGO "[AIO START WEAPON] - "
 #define CSGO_ITEM_NAME_LEN 32
 #define CSGO_ITEMS_TYPES_NUM 12
